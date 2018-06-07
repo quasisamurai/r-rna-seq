@@ -3,7 +3,7 @@ library(dplyr)
 library(Matrix)
 
 # Load the PBMC dataset (33694 x 4287)
-pbmc.data <- Read10X(data.dir = "/GRC38")
+pbmc.data <- Read10X(data.dir = "GRCh38")
 
 # Initialize the Seurat object with the raw (non-normalized data).  Keep all
 # genes expressed in >= 3 cells (~0.1% of the data). Keep all cells with at
@@ -63,26 +63,26 @@ pbmc <- ScaleData(object = pbmc, vars.to.regress = c("nUMI"))
 # You can use either PCA or ICA for dimensional reduction
 #########################################################
 # PCA
-# pbmc <- RunPCA(object = pbmc, pc.genes = pbmc@var.genes, do.print = TRUE, pcs.print = 1:20,
-#              genes.print = 5, pcs.compute = 20)
+pbmc <- RunPCA(object = pbmc, pc.genes = pbmc@var.genes, do.print = TRUE, pcs.print = 1:20,
+             genes.print = 5, pcs.compute = 20)
 #
 # Using this plot find optimal number of components
 #
-# PCElbowPlot(object = pbmc)
+PCElbowPlot(object = pbmc)
 #
-# pbmc <- RunPCA(object = pbmc, pc.genes = pbmc@var.genes, do.print = TRUE, pcs.print = 1:7,
-#                              genes.print = 5, pcs.compute = 7)
+pbmc <- RunPCA(object = pbmc, pc.genes = pbmc@var.genes, do.print = TRUE, pcs.print = 1:7,
+                             genes.print = 5, pcs.compute = 7)
 #
 # Find clusters using SNN-Cliq alg with PCA reduction (resolution param - find optimal yourself :)
 #
-# pbmc <- FindClusters(object = pbmc, reduction.type = "pca", dims.use = 1:7,
-#                     resolution = 0.6, print.output = 0, save.SNN = TRUE)
+pbmc <- FindClusters(object = pbmc, reduction.type = "pca", dims.use = 1:7,
+                    resolution = 0.6, print.output = 0, save.SNN = TRUE)
 #
-# PrintFindClustersParams(object = pbmc)
+PrintFindClustersParams(object = pbmc)
 #
 # Running TSNE to reduce dimension (for visualizing clusters)
 #
-# pbmc <- RunTSNE(object = pbmc, dims.use = 1:7, do.fast = TRUE)
+pbmc <- RunTSNE(object = pbmc, dims.use = 1:7, do.fast = TRUE)
 #########################################################
 #ICA
 pbmc <- RunICA(object = pbmc, ic.genes = pbmc@var.genes, ics.compute = 8)
