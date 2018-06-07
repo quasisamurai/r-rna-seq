@@ -9,7 +9,7 @@ RUN Rscript -e "install.packages('data.table')"
 RUN Rscript -e "install.packages('Seurat')"
 RUN Rscript -e "install.packages('Matrix')"
 RUN Rscript -e "install.packages('dplyr')"
-RUN mkdir project
-COPY /src home/rstudio/project 
+RUN Rscript -e "install.packages('KernSmooth')"
+COPY /src home/rstudio/
 RUN chmod -R 777 home/rstudio
 
